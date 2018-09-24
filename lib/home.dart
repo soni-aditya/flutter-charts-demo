@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
 
   _startWatch() {
     watch.start();
-    _setTime();
+    timer = Timer.periodic(Duration(milliseconds: 100), _updateTime);
   }
 
   _stopWatch() {
@@ -84,5 +84,12 @@ class _HomeState extends State<Home> {
     String hundredStr = (hundreds % 100).toString().padLeft(2, '0');
 
     return "$minutesStr : $secondStr : $hundredStr";
+  }
+
+  _updateTime(Timer timer) {
+    var timeSoFar = watch.elapsedMilliseconds;
+    setState(() {
+      elapsedTime = _transformMilliseconds(timeSoFar);
+    });
   }
 }
